@@ -29,7 +29,7 @@ additional client satisfaction) They need an Active Directory for workstation
 authentication (Windows).
 
 # Application Needs
-- Web app for grades withe :
+- Web app for grades with :
     - SSO
     - Redondant
     - Accessible from outside
@@ -52,4 +52,18 @@ course,
 
 - A web API needs to be created to allow them to automate their tasks.
 
+# Potential hint
+- List of softwares recommended (but feel free to substitute with others):
+    - IDP: Keycloak
+    - DNS: Unbound
+    - IDS/IPS: Suricata
+    - Firewall: IPtables
+    - Web Server / Reverse Proxy / LB: Nginx or Apache
+    - Code versioning and CICD: Github / Github Actions
+    - Language for the application: Python
+    - SSL Certificate: either create them with Openssl or use tooling like XCA
+
+- While it is expected to deliver the final architecture on the Airbus CybervSchool’s ESX, we encourage you to reproduce locally the different infrastructures built.
+
+- Project Management is an integral part of the project: brainstorm, split adequately the workload and tasks between yourselves and crosscheck your work and plan. You are a team.
 
