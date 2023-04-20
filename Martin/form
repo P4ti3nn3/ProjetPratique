@@ -1,0 +1,35 @@
+def login(request):
+    # Everyone
+    context=getContext()
+    template = loader.get_template('login.html')
+    context["courses"]=Course.objects.all()
+    form=Login()
+    context["form"]=form
+    next=request.GET.get('next')
+    if next == None:
+        next = "/landing_page"
+    
+    context["next"] = next
+    if request.method == 'POST':
+        form = Login(request.POST)
+        if form.is_valid():
+            #try:
+            user = authenticate(
+                username=form.cleaned_data.get("username"),
+                #user=User.objects.get(username=username)
+                password=form.cleaned_data.get("password"),
+            )
+            print("username:"+user.get_username()+"\npass : "+user.password)
+            print("passwords match: "+str(user.check_password(form.cleaned_data.get("password"))))
+            #except User.DoesNotExist:
+                #print("invalid user:"+username)
+                #return HttpResponseRedirect('/login')
+
+           # if user.check_password(form.cleaned_data.get("password")):
+            if user is not None:
+                return HttpResponseRedirect('/landing_page')
+            else:
+                return HttpResponseRedirect('/login')
+    else:
+        # Admin and teacher
+        return HttpResponse(template.render(context, request))
