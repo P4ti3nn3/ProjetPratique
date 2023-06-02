@@ -1,0 +1,101 @@
+======================================================================================================================================
+
+		Certificate Authority
+
+======================================================================================================================================
+#Generate private key
+openssl genrsa -out CA-authority/CA-authority.key
+
+#Generate certificate
+openssl req -new -key CA-authority/CA-authority.key -out CA-authority/CA-authority.csr -sha512
+
+#Certifacte informations
+	Country Name (2 letter code) [AU]:FR
+	State or Province Name (full name) [Some-State]:France
+	Locality Name (eg, city) []:Toulouse
+	Organization Name (eg, company) [Internet Widgits Pty Ltd]:Equipe2
+	Organizational Unit Name (eg, section) []:IAM
+	Common Name (e.g. server FQDN or YOUR name) []:cyberdiploma.corp
+	Email Address []:equipe2@cyberdiploma.corp
+
+	Please enter the following 'extra' attributes
+	to be sent with your certificate request
+	A challenge password []:changeit
+	An optional company name []:
+
+#Certificate signature
+openssl x509 -req -days 365 -in CA-authority/CA-authority.csr -out CA-authority/CA-authority.crt -signkey CA-authority/CA-authority.key
+
+#Create CA-authority.conf with this informations
+	[ ca ]
+	default_ca = equipe2_ca
+
+	[ equipe2_ca ]
+	#CA
+	certificate = CA-authority/CA-authority.crt
+	private_key = CA-authority/CA-authority.key
+
+	new_certs_dir   = .
+	database        = CA-authority/CA-authority-log.txt
+	serial          = CA-authority/serial
+
+	default_md = sha512
+	default_days = 365
+	policy = equipe2_policy
+
+	[ equipe2_policy ]
+	countryName             = match
+	stateOrProvinceName     = match
+	organizationName        = match
+	organizationalUnitName  = optional
+	commonName              = supplied
+	emailAddress            = optional
+
+	[ req ]
+	default_bits            = 2048
+	distinguished_name      = req_distinguished_name
+	string_mask             = utf8only
+	default_md              = sha512
+
+#Create serial file
+echo '01' > CA-authority/serial
+
+#Create log file
+touch CA-authority/CA-authority-log.txt
+
+======================================================================================================================================
+
+		Client (keycloak,ldaps,...)
+
+======================================================================================================================================
+#Generate client private key
+openssl genrsa -out CA-client/client-private.pem
+
+#Generate client certificate
+openssl req -new -key CA-client/client-private.pem -out CA-client/client.csr
+#Client certifacte informations
+	You are about to be asked to enter information that will be incorporated
+	into your certificate request.
+	What you are about to enter is what is called a Distinguished Name or a DN.
+	There are quite a few fields but you can leave some blank
+	For some fields there will be a default value,
+	If you enter '.', the field will be left blank.
+	-----
+	Country Name (2 letter code) [AU]:FR
+	State or Province Name (full name) [Some-State]:France
+	Locality Name (eg, city) []:Toulouse
+	Organization Name (eg, company) [Internet Widgits Pty Ltd]:Equipe2
+	Organizational Unit Name (eg, section) []:IAM
+	Common Name (e.g. server FQDN or YOUR name) []:keycloak.cyberdiploma.corp                                               
+	Email Address []:equipe@cyberdiploma.corp
+
+	Please enter the following 'extra' attributes
+	to be sent with your certificate request
+	A challenge password []:
+	An optional company name []:
+
+#Verification
+openssl req -text -noout -verify -in CA-client/client.csr | grep Subject:
+
+#Client certificate signature
+openssl ca -config CA-authority/CA-authority.conf -out CA-client/client-crt.pem -in CA-client/client.csr

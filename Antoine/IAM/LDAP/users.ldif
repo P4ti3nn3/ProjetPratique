@@ -1,0 +1,26 @@
+dn: ou=people,dc=cyberdiploma,dc=corp
+objectClass: top
+objectClass: organizationalUnit
+ou: people
+
+dn: cn=martin,ou=people,dc=cyberdiploma,dc=corp
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+givenName: Martin
+uid: 001
+sn: forest
+cn: martin forest
+userPassword: mdp-martin
+
+dn: cn=ilan,ou=people,dc=cyberdiploma,dc=corp
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+givenName: ilan
+uid: 002
+sn: dez
+cn: ilan dez
+userPassword: mdp-ilan

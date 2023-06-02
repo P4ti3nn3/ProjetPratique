@@ -1,0 +1,22 @@
+dn: ou=groups,dc=cyberdiploma,dc=corp
+objectClass: top
+objectClass: organizationalUnit
+ou: groups
+
+dn: cn=administration,ou=groups,dc=cyberdiploma,dc=corp
+cn: administration
+gidNumber: 100
+objectClass: posixGroup
+objectClass: top
+
+dn: cn=enseigants,ou=groups,dc=cyberdiploma,dc=corp
+cn: enseigants
+gidNumber: 102
+objectClass: posixGroup
+objectClass: top
+
+dn: cn=eleves,ou=groups,dc=cyberdiploma,dc=corp
+cn: eleves
+gidNumber: 103
+objectClass: posixGroup
+objectClass: top

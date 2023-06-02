@@ -1,0 +1,9 @@
+dn: cn=eleves,ou=groups,dc=cyberdiploma,dc=corp
+changetype: modify
+add: memberuid
+memberuid: cn=martin,ou=people,dc=cyberdiploma,dc=corp
+
+dn: cn=eleves,ou=groups,dc=cyberdiploma,dc=corp
+changetype: modify
+add: memberuid
+memberuid: cn=ilan,ou=people,dc=cyberdiploma,dc=corp

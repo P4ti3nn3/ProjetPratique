@@ -1,0 +1,2 @@
+#Settings for python webapp conf (pronot) --> settings.py with param for keycloak adapter
+#Keycloak adapter --> django_keycloak

@@ -1,0 +1,9 @@
+#Send certificate and private key to LDAP configuration for TLS
+
+dn: cn=config
+changetype: modify
+replace: olcTLSCertificateFile
+olcTLSCertificateFile: /home/deby-bdd/IAM/certificate/CA-client/client-crt.pem
+
+replace: olcTLSCertificateKeyFile
+olcTLSCertificateKeyFile: /home/deby-bdd/IAM/certificate/CA-client/client-private.pem

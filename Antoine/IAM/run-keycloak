@@ -1,0 +1,10 @@
+#Keycloak build conf
+sudo keycloak/bin/kc.sh build
+
+#Keycloak start srv
+sudo keycloak/bin/kc.sh start
+
+#check metrics for keycloak
+sudo keycloak/bin/kc.sh start --metrics-enabled=true --health-enabled=true
+sudo curl http://localhost:8080/health/ready
+

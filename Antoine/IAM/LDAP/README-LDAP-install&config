@@ -1,0 +1,55 @@
+########################################################################################################################
+
+#OpenLDAP installation
+
+########################################################################################################################
+sudo apt install slapd ldap-utils
+
+MDP-Admin --> md63-pass_ldaps
+
+#Configuration LDAP admin, domain,...
+sudo dpkg-reconfigure slapd
+
+#domain name --> cyberdiploma.corp
+#organization name --> equipe2
+#administrator mdp --> adm26-ldaps_Pass
+
+
+########################################################################################################################
+
+#OpenLDAP TLS configuration
+
+########################################################################################################################
+#Test LDAPS connection
+openssl s_client -connect cyberdiploma.corp:636
+
+#Install certificate in LDAP conf
+sudo ldapmodify -H ldapi:/// -Y EXTERNAL -f ca-ldaps.ldif
+
+#If the modifications fail with ldap_modify: Other (e.g., implementation specific) error (80), check the file paths for typos, and ensure the files are readable by the openldap user. 
+
+
+#Activation LDAPS on port 636
+sudo nano /etc/default/slapd
+
+#add "ldaps:///" to the SLAPD_SERVICES line
+
+#Restart slapd service
+sudo service slapd restart
+
+##CP certificate in keystore cf:certifiate/keystore/readme.txt
+
+########################################################################################################################
+
+#LDAPS create users,groups,...
+
+########################################################################################################################
+#Create users
+ldapadd -x -W -D "cn=admin,dc=cyberdiploma,dc=corp" -f users.ldif
+
+#Create groups
+ldapadd -x -W -D "cn=admin,dc=cyberdiploma,dc=corp" -f groups.ldif
+
+#Add users in groups
+ldapmodify -x -W -D "cn=admin,dc=cyberdiploma,dc=corp" -f ldap-add-usergroups.ldif 
+
